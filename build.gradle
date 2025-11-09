@@ -1,0 +1,46 @@
+plugins {
+    id 'java'
+}
+
+group = 'x.mux0x'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Montoya API (latest; available on Maven Central)
+    implementation 'net.portswigger.burp.extensions:montoya-api:2025.10' // :contentReference[oaicite:1]{index=1}
+
+    // Protobuf libs (for future descriptor-aware decoding; util also brings JsonFormat)
+    implementation 'com.google.protobuf:protobuf-java:4.33.0'          // :contentReference[oaicite:2]{index=2}
+    implementation 'com.google.protobuf:protobuf-java-util:4.33.0'     // :contentReference[oaicite:3]{index=3}
+
+    // (Optional) annotations
+    implementation 'com.google.code.gson:gson:2.11.0'
+    compileOnly 'org.jetbrains:annotations:24.1.0'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+jar {
+    manifest {
+        attributes(
+            'Manifest-Version': '1.0',
+            'Main-Class': 'x.mux0x.protobufws.ProtobufWsExtension'
+        )
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
