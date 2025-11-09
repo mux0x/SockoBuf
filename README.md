@@ -21,7 +21,7 @@ so you can read or edit structured data without exporting it to another tool.
    ```bash
    ./gradlew clean build
    ```
-3. The fat JAR lands in `build/libs/burp-ws-protobuf-tab-1.0.0.jar`.
+3. The fat JAR lands in `build/libs/sockobuf-1.0.0.jar`.
 
 ## Burp Installation
 1. Open Burp → `Extender` → `Extensions` → `Add`.
